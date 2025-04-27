@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Meus Animais | Adote um Pet{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Meus Animais</h1>
+    <a href="{% url 'cadastrar_animal' %}" class="btn btn-primary">
+        <i class="fas fa-plus me-1"></i> Cadastrar Animal
+    </a>
+</div>
+
+{% if animais %}
+    <div class="row">
+        {% for animal in animais %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    {% if animal.fotos.exists %}
+                        <img src="{{ animal.fotos.first.imagem.url }}" class="card-img-top" alt="{{ animal.nome }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <div class="bg-light text-center pt-5 pb-5">
+                            <i class="fas fa-paw fa-4x text-secondary"></i>
+                            <p class="mt-2 text-secondary">Sem imagem</p>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ animal.nome }}</h5>
+                        <p class="card-text mb-1">
+                            <i class="fas fa-dog me-1"></i> {% if animal.tipo == 'cao' %}Cão{% elif animal.tipo == 'gato' %}Gato{% elif animal.tipo == 'ave' %}Ave{% else %}Outro{% endif %}
+                            {% if animal.raca %}
+                                ({{ animal.raca }})
+                            {% endif %}
+                        </p>
+                        <p class="card-text mb-1">
+                            <i class="fas fa-birthday-cake me-1"></i> {% if animal.idade == 'filhote' %}Filhote{% elif animal.idade == 'jovem' %}Jovem{% elif animal.idade == 'adulto' %}Adulto{% else %}Idoso{% endif %}
+                        </p>
+                        <p class="card-text mb-3">
+                            <i class="fas fa-map-marker-alt me-1"></i> {{ animal.cidade }}/{{ animal.estado }}
+                        </p>
+                        
+                        {% if animal.esta_adotado %}
+                            <div class="alert alert-success mb-3 py-2">
+                                <i class="fas fa-home me-1"></i> Adotado
+                            </div>
+                        {% else %}
+                            <div class="alert alert-info mb-3 py-2">
+                                <i class="fas fa-paw me-1"></i> Disponível para adoção
+                            </div>
+                        {% endif %}
+                        
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'detalhe_animal' animal.id %}" class="btn btn-outline-primary flex-grow-1">Ver</a>
+                            <a href="{% url 'editar_animal' animal.id %}" class="btn btn-outline-secondary flex-grow-1">Editar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        <p>Você ainda não cadastrou nenhum animal.</p>
+        <p class="mb-0">
+            <a href="{% url 'cadastrar_animal' %}" class="alert-link">Clique aqui</a> para cadastrar seu primeiro animal para adoção.
+        </p>
+    </div>
+{% endif %}
+{% endblock %}

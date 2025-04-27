@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Sair | Adote um Pet{% endblock %}
+
+{% block content %}
+<div class="container text-center py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body py-5">
+                    <i class="fas fa-check-circle fa-4x text-success mb-4"></i>
+                    <h1 class="mb-4">Você saiu com sucesso</h1>
+                    <p class="lead mb-4">Obrigado por usar o Adote um Pet.</p>
+                    <div class="d-grid gap-2 col-md-6 mx-auto">
+                        <a href="{% url 'home' %}" class="btn btn-primary">Voltar para a página inicial</a>
+                        <a href="{% url 'login' %}" class="btn btn-outline-primary">Fazer login novamente</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

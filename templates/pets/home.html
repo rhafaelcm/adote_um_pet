@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Adote um Pet - Encontre seu novo amigo{% endblock %}
+
+{% block content %}
+<div class="jumbotron bg-light p-5 rounded">
+    <h1 class="display-4">Adote um Pet 🐱🐶</h1>
+    <p class="lead">Conectando animais que precisam de um lar com pessoas dispostas a adotá-los.</p>
+    <hr class="my-4">
+    <p>Nossa plataforma facilita o processo de adoção, permitindo que você encontre o pet ideal para sua família.</p>
+    <div class="d-flex gap-2">
+        <a class="btn btn-primary btn-lg" href="{% url 'listar_animais' %}" role="button">Ver animais disponíveis</a>
+        {% if user.is_authenticated %}
+            <a class="btn btn-outline-primary btn-lg" href="{% url 'cadastrar_animal' %}" role="button">Cadastrar um animal</a>
+        {% else %}
+            <a class="btn btn-outline-primary btn-lg" href="{% url 'login' %}" role="button">Entrar para cadastrar</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="mt-5">
+    <h2 class="mb-4">Animais em destaque</h2>
+    
+    <div class="row">
+        {% for animal in animais_destaque %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    {% if animal.fotos.exists %}
+                        <img src="{{ animal.fotos.first.imagem.url }}" class="card-img-top" alt="{{ animal.nome }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <div class="bg-light text-center pt-5 pb-5">
+                            <i class="fas fa-paw fa-4x text-secondary"></i>
+                            <p class="mt-2 text-secondary">Sem imagem</p>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ animal.nome }}</h5>
+                        <p class="card-text mb-1">
+                            <i class="fas fa-dog me-1"></i> {% if animal.tipo == 'cao' %}Cão{% elif animal.tipo == 'gato' %}Gato{% elif animal.tipo == 'ave' %}Ave{% else %}Outro{% endif %}
+                            {% if animal.raca %}
+                                ({{ animal.raca }})
+                            {% endif %}
+                        </p>
+                        <p class="card-text mb-1">
+                            <i class="fas fa-birthday-cake me-1"></i> {% if animal.idade == 'filhote' %}Filhote{% elif animal.idade == 'jovem' %}Jovem{% elif animal.idade == 'adulto' %}Adulto{% else %}Idoso{% endif %}
+                        </p>
+                        <p class="card-text mb-3">
+                            <i class="fas fa-map-marker-alt me-1"></i> {{ animal.cidade }}/{{ animal.estado }}
+                        </p>
+                        <a href="{% url 'detalhe_animal' animal.id %}" class="btn btn-primary">Ver detalhes</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info">
+                    Não há animais cadastrados no momento.
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <div class="text-center mt-3">
+        <a href="{% url 'listar_animais' %}" class="btn btn-outline-primary">Ver todos os animais</a>
+    </div>
+</div>
+
+<div class="mt-5">
+    <h2 class="mb-4">Como funciona</h2>
+    
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-search fa-4x mb-3 text-primary"></i>
+                    <h5 class="card-title">1. Encontre</h5>
+                    <p class="card-text">Navegue pelos animais disponíveis e encontre o pet ideal para você e sua família.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-comment-dots fa-4x mb-3 text-primary"></i>
+                    <h5 class="card-title">2. Entre em contato</h5>
+                    <p class="card-text">Envie uma solicitação de adoção para o responsável pelo animal.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-home fa-4x mb-3 text-primary"></i>
+                    <h5 class="card-title">3. Adote</h5>
+                    <p class="card-text">Após aprovação, combine a adoção e dê um novo lar para o seu amigo.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
