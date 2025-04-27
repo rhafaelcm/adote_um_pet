@@ -1,0 +1,45 @@
+/* Estilos personalizados para Adote um Pet */
+
+/* Estilo geral */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* Estilos para cards de animais */
+.card-animal {
+    transition: transform 0.3s ease;
+}
+
+.card-animal:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para botões */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+
+/* Estilos para rodapé */
+footer {
+    margin-top: auto;
+}
+
+/* Estilos para banner */
+.jumbotron {
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('../images/pets-background.jpg');
+    background-size: cover;
+    background-position: center;
+}

@@ -1,0 +1,4 @@
+Django==5.2
+Pillow==10.3.0
+psycopg2-binary==2.9.9  # Para PostgreSQL
+python-dotenv==1.0.1    # Para variáveis de ambiente
